@@ -24,7 +24,7 @@ class Author(models.Model):
     author_name = models.CharField(max_length = 300)
     author_rating = models.FloatField(null=False, blank=False, default=0.0)
     about_the_author = models.TextField()
-    genre = models.ForeignKey(SubGenre, on_delete=models.CASCADE)
+    sub_genre = models.ForeignKey(SubGenre, on_delete=models.CASCADE)
 
 
 class Book(models.Model):
