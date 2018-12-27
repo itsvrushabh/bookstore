@@ -10,13 +10,19 @@ class Genre(models.Model):
     slug = models.CharField(max_length = 300)
     meta_data = models.CharField(max_length = 300)
 
+    def __unicode__(self):
+        return self.name
+
 
 class SubGenre(models.Model):
     id = models.AutoField(primary_key=True)
     name = models.CharField(max_length = 300)
     description = models.TextField()
     slug = models.CharField(max_length = 300)
-    genre = models.ForeignKey(Genre, on_delete=models.CASCADE)
+    genre = models.ManyToManyField(Genre)
+
+    def __unicode__(self):
+        return self.name
 
 
 class Author(models.Model):
@@ -24,7 +30,10 @@ class Author(models.Model):
     author_name = models.CharField(max_length = 300)
     author_rating = models.FloatField(null=False, blank=False, default=0.0)
     about_the_author = models.TextField()
-    sub_genre = models.ForeignKey(SubGenre, on_delete=models.CASCADE)
+    sub_genre = models.ManyToManyField(SubGenre)
+
+    def __unicode__(self):
+        return self.author_name
 
 
 class Book(models.Model):
@@ -38,4 +47,7 @@ class Book(models.Model):
     cost = models.DecimalField(max_digits=8, decimal_places=3)
     currency = models.CharField(max_length = 300)
     publish_date_time = models.DateTimeField(default=datetime.now(), blank=True)
-    author = models.ForeignKey(Author, on_delete=models.CASCADE)
+    author = models.ManyToManyField(Author)
+
+    def __unicode__(self):
+        return self.name
